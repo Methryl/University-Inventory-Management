@@ -1,23 +1,40 @@
 /*34495e
 lightbluexu 3498db*/
+/* Main layout container */
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh; /* Full viewport height */
 }
 
+/* Top bar styling */
 .topBar {
-  background-color: #34495e
-  ;
+  background-color: #34495e;
   color: #fff;
-  padding: 10px;
+  padding: 1px; /* Adjust padding as needed */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Space between logo and centered content */
+  height: 60px; /* Height of the top bar */
+  width: 100%; /* Full width */
 }
 
+/* Styling for the logo container */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+/* Styling for the centered content */
+.centeredContent {
+  flex: 1; /* Takes up remaining space */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+}
+
+/* Remove default margins from <h2> */
 .topBar h2 {
-  margin-left: 20px;
+  margin: 0;
 }
 
 .contentWrapper {
@@ -25,8 +42,9 @@ lightbluexu 3498db*/
   flex: 1;
 }
 
+
 .sidebar {
-  width: 200px;
+  width: 100px;
   background-color: #f4f4f4;
   padding: 20px;
 }
