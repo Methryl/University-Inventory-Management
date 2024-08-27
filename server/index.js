@@ -5,7 +5,7 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
-const port = 3000
+const port = 3001
 
 var con = mysql.createConnection({
   host: "127.0.0.1",
