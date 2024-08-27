@@ -16,9 +16,7 @@ var con = mysql.createConnection({
 });
 
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+
 
 app.get('/assets', (req, res) => {
   con.connect(function(err) {
