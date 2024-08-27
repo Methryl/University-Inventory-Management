@@ -18,9 +18,11 @@ function Layout() {
         <nav className="sidebar">
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/inventory">Inventory <span className="badge">⚠️</span></Link></li>
-            <li><Link to="/employees">Employees</Link></li>
-            <li><Link to="/transactions">Transactions</Link></li>
+            <li><Link to="/inventory">Inventory </Link></li>
+            <li><Link to="/users">Users</Link></li>
+            <li><Link to="/usersForm">Add User</Link></li>
+            <li><Link to="/inventoryForm">Add Item</Link></li>
+
           </ul>
         </nav>
         
