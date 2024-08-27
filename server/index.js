@@ -16,7 +16,15 @@ var con = mysql.createConnection({
 });
 
 
-
+function initDatabase(){
+  console.log("creating assets table");
+  var sql = " CREATE TABLE assets (id INT PRIMARY KEY,title VARCHAR(255),asset_id VARCHAR(255),company VARCHAR(255),asset_type VARCHAR(255),serial_number VARCHAR(255),assigned_to VARCHAR(255));";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result)
+  });
+}
+initDatabase();
 
 app.get('/assets', (req, res) => {
   con.connect(function(err) {
