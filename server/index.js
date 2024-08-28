@@ -18,10 +18,13 @@ var con = mysql.createConnection({
 
 function initDatabase(){
   console.log("creating assets table");
-  var sql = " CREATE TABLE assets (id INT PRIMARY KEY,title VARCHAR(255),asset_id VARCHAR(255),company VARCHAR(255),asset_type VARCHAR(255),serial_number VARCHAR(255),assigned_to VARCHAR(255));";
-  con.query(sql, function (err, result) {
+  var assetssql = " CREATE TABLE if not exists assets  (id INT PRIMARY KEY AUTO_INCREMENT,title VARCHAR(255),asset_id VARCHAR(255),company VARCHAR(255),asset_type VARCHAR(255),serial_number VARCHAR(255),assigned_to int, FOREIGN KEY (assigned_to) REFERENCES user(id));";
+  con.query(assetssql, function (err, result) {
     if (err) throw err;
-    console.log(result)
+  });
+  var usersql = " CREATE TABLE if not exists users  (id INT PRIMARY KEY AUTO_INCREMENT,name varchar(30), sname varchar (30), mail varchar(99));";
+  con.query(usersql, function (err, result) {
+    if (err) throw err;
   });
 }
 initDatabase();
@@ -35,11 +38,90 @@ app.get('/assets', (req, res) => {
     if (req.query.title != null) {
       title = req.query.title
       var cleanQuery = title.replace(/[+|'|"|_|-]+/gi, "");
-      console.log(cleanQuery);
       sql = " select * from assets WHERE title LIKE '%"+cleanQuery+"%';";
     }else{
       sql = " select * from assets;";
     }    
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      res.send(result)
+    });
+  });
+  
+})
+
+app.get('/users', (req, res) => {
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("requesting users!");
+    var title
+    var sql
+    if (req.query.title != null) {
+      title = req.query.title
+      var cleanQuery = title.replace(/[+|'|"|_|-]+/gi, "");
+      sql = " select * from users WHERE title LIKE '%"+cleanQuery+"%';";
+    }else{
+      sql = " select * from users;";
+    }    
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      res.send(result)
+    });
+  });
+  
+})
+
+app.get('/assets/asign', (req, res) => {
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("requesting assets!");
+    var user
+    var asset
+    var sql
+   
+    user = req.query.user
+    asset = req.query.asset
+    var cleanUserQuery = user.replace(/[+|'|"|_|-]+/gi, "");
+    var cleanAssetQuery = asset.replace(/[+|'|"|_|-]+/gi, "");
+    sql = " update assets set assigned_to = "+cleanUserQuery+" WHERE id = "+cleanAssetQuery+";"; 
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      res.send(result)
+    });
+  });
+  
+})
+
+app.get('/users/add', (req, res) => {
+  con.connect(function(err) {
+    if (err) throw err;
+    var name
+    var sname
+    var mail
+    name = req.query.name
+    sname = req.query.sname
+    mail = req.query.mail
+    var sql  
+    var cleanNameQuery = name.replace(/[+|'|"|_|-]+/gi, "");
+    var cleanSnameQuery = sname.replace(/[+|'|"|_|-]+/gi, "");
+    var cleanMailQuery = mail.replace(/[+|'|"|_|-]+/gi, "");
+    sql = " insert into users (name,sname,mail) values ('"+cleanNameQuery+"','"+cleanSnameQuery+"','"+cleanMailQuery+"');"; 
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      res.send(result)
+    });
+  });
+  
+})
+
+app.get('/users/:id/assets', (req, res) => {
+  con.connect(function(err) {
+    if (err) throw err;
+    var id
+    id = req.params.id
+    var sql  
+    var cleanIdQuery = id.replace(/[+|'|"|_|-]+/gi, "");
+    sql = " select * from assets where assigned_to = " + cleanIdQuery; 
     con.query(sql, function (err, result) {
       if (err) throw err;
       res.send(result)
