@@ -54,6 +54,28 @@ app.get('/assets', (req, res) => {
   
 })
 
+app.get('/users', (req, res) => {
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("requesting users!");
+    var user
+    var sql
+    if (req.query.user != null) {
+      user = req.query.user
+      var cleanQuery = user.replace(/[+|'|"|_|-]+/gi, "");
+      console.log(cleanQuery);
+      sql = " select * from users WHERE name LIKE '%"+cleanQuery+"%';";
+    }else{
+      sql = " select * from users;";
+    }    
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      res.send(result)
+    });
+  });
+  
+})
+
 app.get('/users/add', (req, res) => {
   con.connect(function(err) {
     if (err) throw err;
