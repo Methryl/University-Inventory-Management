@@ -39,90 +39,11 @@ app.get('/assets', (req, res) => {
     if (req.query.title != null) {
       title = req.query.title
       var cleanQuery = title.replace(/[+|'|"|_|-]+/gi, "");
+      console.log(cleanQuery);
       sql = " select * from assets WHERE title LIKE '%"+cleanQuery+"%';";
     }else{
       sql = " select * from assets;";
     }    
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result)
-    });
-  });
-  
-})
-
-app.get('/users', (req, res) => {
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("requesting users!");
-    var title
-    var sql
-    if (req.query.title != null) {
-      title = req.query.title
-      var cleanQuery = title.replace(/[+|'|"|_|-]+/gi, "");
-      sql = " select * from users WHERE title LIKE '%"+cleanQuery+"%';";
-    }else{
-      sql = " select * from users;";
-    }    
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result)
-    });
-  });
-  
-})
-
-app.get('/assets/asign', (req, res) => {
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("requesting assets!");
-    var user
-    var asset
-    var sql
-   
-    user = req.query.user
-    asset = req.query.asset
-    var cleanUserQuery = user.replace(/[+|'|"|_|-]+/gi, "");
-    var cleanAssetQuery = asset.replace(/[+|'|"|_|-]+/gi, "");
-    sql = " update assets set assigned_to = "+cleanUserQuery+" WHERE id = "+cleanAssetQuery+";"; 
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result)
-    });
-  });
-  
-})
-
-app.get('/users/add', (req, res) => {
-  con.connect(function(err) {
-    if (err) throw err;
-    var name
-    var sname
-    var mail
-    name = req.query.name
-    sname = req.query.sname
-    mail = req.query.mail
-    var sql  
-    var cleanNameQuery = name.replace(/[+|'|"|_|-]+/gi, "");
-    var cleanSnameQuery = sname.replace(/[+|'|"|_|-]+/gi, "");
-    var cleanMailQuery = mail.replace(/[+|'|"|_|-]+/gi, "");
-    sql = " insert into users (name,sname,mail) values ('"+cleanNameQuery+"','"+cleanSnameQuery+"','"+cleanMailQuery+"');"; 
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result)
-    });
-  });
-  
-})
-
-app.get('/users/:id/assets', (req, res) => {
-  con.connect(function(err) {
-    if (err) throw err;
-    var id
-    id = req.params.id
-    var sql  
-    var cleanIdQuery = id.replace(/[+|'|"|_|-]+/gi, "");
-    sql = " select * from assets where assigned_to = " + cleanIdQuery; 
     con.query(sql, function (err, result) {
       if (err) throw err;
       res.send(result)
