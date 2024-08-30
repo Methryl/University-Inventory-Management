@@ -10,7 +10,7 @@
 }
 
 .inventory-table tr:nth-child(even) {
-  background-color: #433030;
+  background-color: #d5d5d5;
 }
 
 .inventory-table tr:hover {
