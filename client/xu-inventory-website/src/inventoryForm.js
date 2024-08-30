@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
- 
- 
+
 const AssetForm = () => {
   const [formData, setFormData] = useState({
     title: '',
@@ -11,9 +9,10 @@ const AssetForm = () => {
     serial_number: '',
     assigned_to: ''
   });
- 
+
   const [users, setUsers] = useState([]);
- 
+  const [message, setMessage] = useState(''); // State for feedback message
+
   useEffect(() => {
     // Fetch users to populate the dropdown
     const fetchUsers = async () => {
@@ -25,10 +24,10 @@ const AssetForm = () => {
         console.error('Error fetching users:', error);
       }
     };
- 
+
     fetchUsers();
   }, []);
- 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -36,10 +35,10 @@ const AssetForm = () => {
       [name]: value
     });
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     try {
       const response = await fetch('http://localhost:3001/assets', {
         method: 'POST',
@@ -48,18 +47,29 @@ const AssetForm = () => {
         },
         body: JSON.stringify(formData)
       });
- 
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
- 
+
       const result = await response.json();
       console.log('Success:', result);
+      setMessage('Asset added successfully!');
+      // Clear form fields after successful submission
+      setFormData({
+        title: '',
+        asset_id: '',
+        company: '',
+        asset_type: '',
+        serial_number: '',
+        assigned_to: ''
+      });
     } catch (error) {
       console.error('Error:', error);
+      setMessage('Failed to add asset.');
     }
   };
- 
+
   return (
     <div>
       <h1>Add New Asset</h1>
@@ -72,6 +82,7 @@ const AssetForm = () => {
               name="title"
               value={formData.title}
               onChange={handleChange}
+              required
             />
           </label>
         </div>
@@ -83,6 +94,7 @@ const AssetForm = () => {
               name="asset_id"
               value={formData.asset_id}
               onChange={handleChange}
+              required
             />
           </label>
         </div>
@@ -94,6 +106,7 @@ const AssetForm = () => {
               name="company"
               value={formData.company}
               onChange={handleChange}
+              required
             />
           </label>
         </div>
@@ -105,6 +118,7 @@ const AssetForm = () => {
               name="asset_type"
               value={formData.asset_type}
               onChange={handleChange}
+              required
             />
           </label>
         </div>
@@ -116,6 +130,7 @@ const AssetForm = () => {
               name="serial_number"
               value={formData.serial_number}
               onChange={handleChange}
+              required
             />
           </label>
         </div>
@@ -123,10 +138,10 @@ const AssetForm = () => {
           <label>
             Assigned To:
             <select
-             type="text"
               name="assigned_to"
               value={formData.assigned_to}
               onChange={handleChange}
+              required
             >
               <option value="">Select User</option>
               {users.map(user => (
@@ -139,9 +154,9 @@ const AssetForm = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      {message && <p className="feedback-message">{message}</p>} {/* Display feedback message */}
     </div>
   );
 };
- 
+
 export default AssetForm;
- 

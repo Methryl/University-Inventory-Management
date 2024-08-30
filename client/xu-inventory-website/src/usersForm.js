@@ -1,14 +1,12 @@
+import React, { useState } from 'react';
 
- 
-  import React, { useState } from 'react';
- 
 const UserForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     sname: '',
     mail: ''
   });
- 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -16,10 +14,10 @@ const UserForm = () => {
       [name]: value
     });
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     try {
       const response = await fetch('http://localhost:3001/users/add', {
         method: 'POST',
@@ -28,18 +26,23 @@ const UserForm = () => {
         },
         body: JSON.stringify(formData)
       });
- 
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
- 
+
       const result = await response.json();
       console.log('Success:', result);
+      setFormData({
+        name: '',
+        sname: '',
+        mail: ''
+      }); // Clear the form after successful submission
     } catch (error) {
       console.error('Error:', error);
     }
   };
- 
+
   return (
     <div>
       <h1>Add New User</h1>
@@ -52,6 +55,7 @@ const UserForm = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              required
             />
           </label>
         </div>
@@ -63,6 +67,7 @@ const UserForm = () => {
               name="sname"
               value={formData.sname}
               onChange={handleChange}
+              required
             />
           </label>
         </div>
@@ -70,10 +75,11 @@ const UserForm = () => {
           <label>
             Email:
             <input
-              type="text"
+              type="email"
               name="mail"
               value={formData.mail}
               onChange={handleChange}
+              required
             />
           </label>
         </div>
@@ -82,6 +88,5 @@ const UserForm = () => {
     </div>
   );
 };
- 
+
 export default UserForm;
- 

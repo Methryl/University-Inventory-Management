@@ -1,121 +1,140 @@
-const express = require('express')
+const express = require('express');
 const mysql = require('mysql2');
-const app = express()
-var cors = require('cors')
-const dotenv = require('dotenv')
+const cors = require('cors');
+const dotenv = require('dotenv');
 
-app.use(cors())
+const app = express();
 
-dotenv.config()
+dotenv.config();
 
-const port = 3001
+const port = 3001;
 
-var con = mysql.createConnection({
+// Middleware
+app.use(cors());
+app.use(express.json()); // Add this line to parse JSON request bodies
+
+const con = mysql.createConnection({
   host: "127.0.0.1",
-  port: process.env.PORT,
+  port: process.env.DB_PORT, // Changed to process.env.DB_PORT
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB
 });
 
-
-function initDatabase(){
-  console.log("creating assets table");
-  var assetssql = " CREATE TABLE if not exists assets  (id INT PRIMARY KEY AUTO_INCREMENT,title VARCHAR(255),asset_id VARCHAR(255),company VARCHAR(255),asset_type VARCHAR(255),serial_number VARCHAR(255),assigned_to int, FOREIGN KEY (assigned_to) REFERENCES user(id));";
+// Initialize database
+function initDatabase() {
+  console.log("Creating assets and users tables");
+  const assetssql = `
+    CREATE TABLE IF NOT EXISTS assets (
+      id INT PRIMARY KEY AUTO_INCREMENT,
+      title VARCHAR(255),
+      asset_id VARCHAR(255),
+      company VARCHAR(255),
+      asset_type VARCHAR(255),
+      serial_number VARCHAR(255),
+      assigned_to INT,
+      FOREIGN KEY (assigned_to) REFERENCES users(id)
+    );
+  `;
   con.query(assetssql, function (err, result) {
     if (err) throw err;
   });
-  var usersql = " CREATE TABLE if not exists users  (id INT PRIMARY KEY AUTO_INCREMENT,name varchar(30), sname varchar (30), mail varchar(99));";
+  
+  const usersql = `
+    CREATE TABLE IF NOT EXISTS users (
+      id INT PRIMARY KEY AUTO_INCREMENT,
+      name VARCHAR(30),
+      sname VARCHAR(30),
+      mail VARCHAR(99)
+    );
+  `;
   con.query(usersql, function (err, result) {
     if (err) throw err;
   });
 }
+
 initDatabase();
 
+/*
 app.get('/assets', (req, res) => {
-  con.connect(function(err) {
+  con.query('SELECT * FROM assets', (err, result) => {
     if (err) throw err;
-    console.log("requesting assets!");
-    var title
-    var sql
-    if (req.query.title != null) {
-      title = req.query.title
-      var cleanQuery = title.replace(/[+|'|"|_|-]+/gi, "");
-      console.log(cleanQuery);
-      sql = " select * from assets WHERE title LIKE '%"+cleanQuery+"%';";
-    }else{
-      sql = " select * from assets;";
-    }    
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result)
-    });
+    res.send(result);
   });
-  
-})
+});
+*/
+app.get('/assets', (req, res) => {
+  const { title } = req.query;
+
+  let sql = 'SELECT * FROM assets';
+  let params = [];
+
+  // If there is a title query, modify the SQL statement
+  if (title) {
+    sql += ' WHERE title LIKE ?';
+    params.push(`%${title}%`);
+  }
+
+  con.query(sql, params, (err, result) => {
+    if (err) {
+      console.error('Error fetching assets:', err);
+      res.status(500).send('Error fetching assets');
+      return;
+    }
+    res.send(result);
+  });
+});
+
 
 app.get('/users', (req, res) => {
-  con.connect(function(err) {
+  con.query('SELECT * FROM users', (err, result) => {
     if (err) throw err;
-    console.log("requesting users!");
-    var user
-    var sql
-    if (req.query.user != null) {
-      user = req.query.user
-      var cleanQuery = user.replace(/[+|'|"|_|-]+/gi, "");
-      console.log(cleanQuery);
-      sql = " select * from users WHERE name LIKE '%"+cleanQuery+"%';";
-    }else{
-      sql = " select * from users;";
-    }    
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result)
-    });
+    res.send(result);
   });
-  
-})
+});
 
-app.get('/users/add', (req, res) => {
-  con.connect(function(err) {
-    if (err) throw err;
-    var name
-    var sname
-    var mail
-    name = req.query.name
-    sname = req.query.sname
-    mail = req.query.mail
-    var sql  
-    var cleanNameQuery = name.replace(/[+|'|"|_|-]+/gi, "");
-    var cleanSnameQuery = sname.replace(/[+|'|"|_|-]+/gi, "");
-    var cleanMailQuery = mail.replace(/[+|'|"|_|-]+/gi, "");
-    sql = " insert into users (name,sname,mail) values ('"+cleanNameQuery+"','"+cleanSnameQuery+"','"+cleanMailQuery+"');"; 
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result)
-    });
-  });
-  
-})
+app.post('/users/add', (req, res) => {
+  const { name, sname, mail } = req.body;
 
-app.get('/users/:id/assets', (req, res) => {
-  con.connect(function(err) {
-    if (err) throw err;
-    var id
-    id = req.params.id
-    var sql  
-    var cleanIdQuery = id.replace(/[+|'|"|_|-]+/gi, "");
-    sql = " select * from assets where assigned_to = " + cleanIdQuery; 
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result)
-    });
+  if (!name || !sname || !mail) {
+    return res.status(400).send('All fields are required');
+  }
+
+  const sql = `
+    INSERT INTO users (name, sname, mail)
+    VALUES (?, ?, ?);
+  `;
+
+  con.query(sql, [name, sname, mail], function (err, result) {
+    if (err) {
+      console.error('Error inserting user:', err);
+      res.status(500).send('Error inserting user');
+      return;
+    }
+    res.status(201).send(result);
   });
-  
-})
+});
+
+app.post('/assets', (req, res) => {
+  const { title, asset_id, company, asset_type, serial_number, assigned_to } = req.body;
+
+  const sql = `
+    INSERT INTO assets (title, asset_id, company, asset_type, serial_number, assigned_to)
+    VALUES (?, ?, ?, ?, ?, ?);
+  `;
+
+  con.query(sql, [title, asset_id, company, asset_type, serial_number, assigned_to], function (err, result) {
+    if (err) {
+      console.error('Error inserting asset:', err);
+      res.status(500).send('Error inserting asset');
+      return;
+    }
+    res.status(201).send(result);
+  });
+});
 
 
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Server listening on port ${port}`);
+});
