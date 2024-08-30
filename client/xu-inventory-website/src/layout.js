@@ -1,26 +1,26 @@
 import React from 'react';
-import './App.css'; // Ensure this file contains styles for your layout
+import './App.css'; 
 import { Outlet, Link } from 'react-router-dom';
 
 function Layout() {
   return (
     <div className="layout">
       <div className="topBar">
-
-      <div className="logo">
+      <ul className="logo">
 <Link to="/">
       <img
+       src="/image copy.png" 
+       alt="XU Logo"
         style={{
-          height: '150px',
-          width: '200px', /* Ensure width matches height for a perfect circle */
-         
-          objectFit: 'cover' /* Optional: Ensures image covers the circle properly */
+          height: '50px',
+          width: '50px', 
+          borderRadius: '50%', 
+          objectFit: 'cover' 
         }}
-        src="https://cdn.schuelerkarriere.de/schuelerkarriere/2bfe712d-93ec-48af-9941-d4ea50dc3be9%252Fxu-exponential-university_logo.webp"
-        alt="XU Logo"
+       
       />
     </Link>
-</div>
+</ul>
 
 <ul className="centeredContent">
   <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
