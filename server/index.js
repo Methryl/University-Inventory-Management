@@ -52,6 +52,45 @@ app.get('/assets', (req, res) => {
   
 })
 
+app.get('/users/add', (req, res) => {
+  con.connect(function(err) {
+    if (err) throw err;
+    var name
+    var sname
+    var mail
+    name = req.query.name
+    sname = req.query.sname
+    mail = req.query.mail
+    var sql  
+    var cleanNameQuery = name.replace(/[+|'|"|_|-]+/gi, "");
+    var cleanSnameQuery = sname.replace(/[+|'|"|_|-]+/gi, "");
+    var cleanMailQuery = mail.replace(/[+|'|"|_|-]+/gi, "");
+    sql = " insert into users (name,sname,mail) values ('"+cleanNameQuery+"','"+cleanSnameQuery+"','"+cleanMailQuery+"');"; 
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      res.send(result)
+    });
+  });
+  
+})
+
+app.get('/users/:id/assets', (req, res) => {
+  con.connect(function(err) {
+    if (err) throw err;
+    var id
+    id = req.params.id
+    var sql  
+    var cleanIdQuery = id.replace(/[+|'|"|_|-]+/gi, "");
+    sql = " select * from assets where assigned_to = " + cleanIdQuery; 
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      res.send(result)
+    });
+  });
+  
+})
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
