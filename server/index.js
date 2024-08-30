@@ -11,7 +11,7 @@ const port = 3001
 var con = mysql.createConnection({
   host: "127.0.0.1",
   port: process.env.PORT,
-  user: process.env.USER,
+  user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB
 });
