@@ -7,20 +7,20 @@ function Layout() {
     <div className="layout">
       <div className="topBar">
 
-      <ul className="logo">
+      <div className="logo">
 <Link to="/">
       <img
         style={{
-          height: '50px',
-          width: '50px', /* Ensure width matches height for a perfect circle */
-          borderRadius: '50%', /* Make the image circular */
+          height: '150px',
+          width: '200px', /* Ensure width matches height for a perfect circle */
+         
           objectFit: 'cover' /* Optional: Ensures image covers the circle properly */
         }}
         src="https://cdn.schuelerkarriere.de/schuelerkarriere/2bfe712d-93ec-48af-9941-d4ea50dc3be9%252Fxu-exponential-university_logo.webp"
         alt="XU Logo"
       />
     </Link>
-</ul>
+</div>
 
 <ul className="centeredContent">
   <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
