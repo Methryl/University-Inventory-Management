@@ -6,9 +6,11 @@ import SearchBar from './SearchBar'; // Import the SearchBar component
 function Home() {
     // Define state for storing search results
     const [searchResults, setSearchResults] = useState([]);
+    const [searchQuery, setSearchQuery] = useState(''); // Add state to track the current search query
 
     // Define the handleSearch function
     const handleSearch = (query) => {
+        setSearchQuery(query); // Update the search query state
         console.log('Searching for:', query);
 
         // Make a request to the backend API
@@ -33,16 +35,20 @@ function Home() {
             {/* Render the search results */}
             <div className="search-results">
                 <h3>Search Results</h3>
-                <div className="results-container">
-                    {searchResults.map((asset) => (
-                        <div className="result-card" key={asset.id}>
-                            <h4>{asset.title}</h4>
-                            <p><strong>Company:</strong> {asset.company}</p>
-                            <p><strong>Type:</strong> {asset.asset_type}</p>
-                            <p><strong>Serial Number:</strong> {asset.serial_number}</p>
-                        </div>
-                    ))}
-                </div>
+                {searchResults.length === 0 && searchQuery ? (
+                    <p className="no-results">No results found for "{searchQuery}".</p>
+                ) : (
+                    <div className="results-container">
+                        {searchResults.map((asset) => (
+                            <div className="result-card" key={asset.id}>
+                                <h4>{asset.title}</h4>
+                                <p><strong>Company:</strong> {asset.company}</p>
+                                <p><strong>Type:</strong> {asset.asset_type}</p>
+                                <p><strong>Serial Number:</strong> {asset.serial_number}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );
