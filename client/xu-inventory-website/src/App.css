@@ -84,3 +84,191 @@ lightbluexu 3498db*/
   padding: 0 5px;
   margin-left: 5px;
 }
+/*34495e
+lightbluexu 3498db*/
+/* Main layout container */
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+}
+ 
+/* Top bar styling */
+.topBar {
+  background-color: #34495e;
+  color: #fff;
+  padding: 1px; /* Adjust padding as needed */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between logo and centered content */
+  height: 60px; /* Height of the top bar */
+  width: 100%; /* Full width */
+}
+ 
+/* Styling for the logo container */
+.logo {
+  display: flex;
+  align-items: center;
+}
+ 
+/* Styling for the centered content */
+.centeredContent {
+  flex: 1; /* Takes up remaining space */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+}
+ 
+/* Remove default margins from <h2> */
+.topBar h2 {
+  margin: 0;
+}
+ 
+.contentWrapper {
+  display: flex;
+  flex: 1;
+}
+ 
+ 
+.sidebar {
+  width: 100px;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+ 
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+ 
+.sidebar li {
+  margin: 15px 0;
+}
+ 
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+}
+ 
+.sidebar a:hover {
+  color: #007bff;
+}
+ 
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+ 
+.badge {
+  background-color: yellow;
+  border-radius: 50%;
+  padding: 0 5px;
+  margin-left: 5px;
+}
+ 
+/* formStyles.css */
+/*
+form {
+  display: block; /* Ensures the form elements are stacked vertically */
+  /*margin: 0 auto; /* Center the form on the page if needed */
+  /*padding: 0;
+  box-sizing: border-box;
+}
+*/
+ 
+/* Root container for the entire app */
+.app-container {
+  height: 100vh;               /* Full viewport height */
+  display: flex;               /* Flex container */
+  justify-content: center;     /* Center content horizontally */
+  align-items: center;         /* Center content vertically */
+  background-color: #eef2f7;   /* Light background color */
+  margin: 0;                   /* Remove default margin */
+  padding: 0;                  /* Remove default padding */
+}
+ 
+/* Style for the form container */
+form {
+  width: 50%;                  /* Sets form width to 50% of its container */
+  max-width: 600px;            /* Limits form's maximum width */
+  padding: 20px;               /* Adds padding for content */
+  background-color: #f9f9f9;   /* Background color */
+  border-radius: 8px;          /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  box-sizing: border-box;      /* Includes padding and border in width */
+  margin: 0 auto;              /* Centers form horizontally within its container */
+}
+ 
+/* Input and select fields styling */
+input[type="text"], select {
+  width: 100%;                /* Full width of the form's available space */
+  padding: 10px;              /* Padding inside input fields */
+  margin-top: 5px;            /* Top margin for spacing */
+  margin-bottom: 10px;        /* Bottom margin for spacing */
+  border: 1px solid #ddd;     /* Border around input fields */
+  border-radius: 4px;         /* Rounded corners */
+  font-size: 1em;             /* Font size */
+  box-sizing: border-box;     /* Includes padding and border in width */
+  display: block;             /* Makes input elements block-level */
+}
+ 
+ 
+/*
+div {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+*/
+ 
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+ 
+/* Style for form labels */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #555;
+}
+ 
+/* Style for input fields */
+ 
+ 
+button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+ 
+button:hover {
+  background-color: #0056b3;
+}
+ 
+@media (max-width: 768px) {
+  div {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 1.5em;
+  }
+  
+  button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+}
+ 
+ 
