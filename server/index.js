@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const datagen = require('./datagen');
 
 const app = express();
 
@@ -9,17 +10,19 @@ dotenv.config();
 
 const port = 3001;
 
+// Middleware
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json()); // Add this line to parse JSON request bodies
 
 const con = mysql.createConnection({
   host: "127.0.0.1",
-  port: process.env.DB_PORT, 
+  port: process.env.DB_PORT, // Changed to process.env.DB_PORT
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB
 });
 
+// Initialize database
 function initDatabase() {
   console.log("Creating assets and users tables");
   const assetssql = `
@@ -47,6 +50,8 @@ function initDatabase() {
   con.query(usersql, function (err, result) {
     if (err) throw err;
   });
+
+  datagen.genData(con)
 }
 
 initDatabase();
@@ -57,6 +62,7 @@ app.get('/assets', (req, res) => {
   let sql = 'SELECT * FROM assets';
   let params = [];
 
+  // If there is a title query, modify the SQL statement
   if (title) {
     sql += ' WHERE title LIKE ?';
     params.push(`%${title}%`);
@@ -98,7 +104,7 @@ app.get('/users', (req, res) => {
   let params = [];
 
   if (id) {
-    sql += ' WHERE id LIKE ?';
+    sql += ' WHERE id LIKE ?';2
     params.push(`${id}`);
   }
 
