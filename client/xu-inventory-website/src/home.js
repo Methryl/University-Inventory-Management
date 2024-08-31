@@ -1,24 +1,21 @@
 // Home.js
-import React, { useState } from 'react'; // Import React and hooks
+import React, { useState } from 'react'; 
 import './home.css'; 
-import SearchBar from './SearchBar'; // Import the SearchBar component
+import SearchBar from './SearchBar'; 
 
 function Home() {
-    // Define state for storing search results
     const [searchResults, setSearchResults] = useState([]);
-    const [searchQuery, setSearchQuery] = useState(''); // Add state to track the current search query
+    const [searchQuery, setSearchQuery] = useState(''); 
 
-    // Define the handleSearch function
     const handleSearch = (query) => {
-        setSearchQuery(query); // Update the search query state
+        setSearchQuery(query); 
         console.log('Searching for:', query);
 
-        // Make a request to the backend API
         fetch(`http://localhost:3001/assets?title=${encodeURIComponent(query)}`)
             .then((response) => response.json())
             .then((data) => {
                 console.log('Search results:', data);
-                setSearchResults(data); // Set the results to state to use in rendering
+                setSearchResults(data); 
             })
             .catch((error) => {
                 console.error('Error fetching search results:', error);
@@ -29,10 +26,8 @@ function Home() {
         <div>
             <h1>Home</h1>
 
-            {/* Render the SearchBar component */}
             <SearchBar onSearch={handleSearch} />
 
-            {/* Render the search results */}
             <div className="search-results">
                 <h3>Search Results</h3>
                 {searchResults.length === 0 && searchQuery ? (
