@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './inventory.css';
 
+
 function Inventory() {
   const [assets, setAssets] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch data from the backend
     fetch('http://localhost:3001/assets')
       .then(response => {
         if (!response.ok) {
@@ -16,14 +16,13 @@ function Inventory() {
         return response.json();
       })
       .then(data => {
-        console.log('Fetched assets:', data); // Log the data to verify
+        console.log('Fetched assets:', data); 
         setAssets(data);
       })
       .catch(error => console.error('Error fetching assets:', error));
   }, []);
 
   const handleRowClick = (id) => {
-    // Navigate to the detailed view of the asset
     navigate(`/inventory/${id}`);
   };
 
