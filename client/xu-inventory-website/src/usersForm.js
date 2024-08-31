@@ -7,6 +7,8 @@ const UserForm = () => {
     mail: ''
   });
 
+  const [message, setMessage] = useState(''); 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -33,13 +35,17 @@ const UserForm = () => {
 
       const result = await response.json();
       console.log('Success:', result);
+
       setFormData({
         name: '',
         sname: '',
         mail: ''
-      }); // Clear the form after successful submission
+      }); 
+
+      setMessage('User successfully added!'); 
     } catch (error) {
       console.error('Error:', error);
+      setMessage('Failed to add user. Please try again.'); 
     }
   };
 
@@ -85,6 +91,8 @@ const UserForm = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      
+      {message && <p>{message}</p>}
     </div>
   );
 };

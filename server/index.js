@@ -9,9 +9,8 @@ dotenv.config();
 
 const port = 3001;
 
-// Middleware
 app.use(cors());
-app.use(express.json()); // Add this line to parse JSON request bodies
+app.use(express.json()); 
 
 const con = mysql.createConnection({
   host: "127.0.0.1",
@@ -21,7 +20,6 @@ const con = mysql.createConnection({
   database: process.env.DB
 });
 
-// Initialize database
 function initDatabase() {
   console.log("Creating assets and users tables");
   const assetssql = `
@@ -69,7 +67,6 @@ app.get('/assets', (req, res) => {
   let sql = 'SELECT * FROM assets';
   let params = [];
 
-  // If there is a title query, modify the SQL statement
   if (title) {
     sql += ' WHERE title LIKE ?';
     params.push(`%${title}%`);
