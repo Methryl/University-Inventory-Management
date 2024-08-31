@@ -92,47 +92,26 @@ npm start
 The frontend application will run on http://localhost:3000.
 
 
-# API Endpoints
-GET /assets
-Retrieve a list of assets. Can include query parameters for searching.
+## API Endpoints
 
-Query Parameters:
+The API exposes endpoints for managing assets and users. It supports basic CRUD operations and query filtering.
 
-query (string): Search term to look for in title, asset ID, company, asset type, and serial number.
-Response:
+- `GET /assets`: Fetches asset records. Optionally filters results by `title` if a query parameter is provided.
+  - Query Parameters: 
+    - `title` (optional): Filter assets by title.
+  - Response: Returns a list of assets.
 
-Array of asset objects.
-POST /assets
-Add a new asset.
+- `POST /assets`: Inserts a new asset record into the database.
+  - Request Body:
+    - `title`, `asset_id`, `company`, `asset_type`, `serial_number`, `assigned_to`.
+  - Response: Returns the result of the insert operation.
 
-Request Body:
+- `GET /users`: Fetches user records. Optionally filters results by `id` if a query parameter is provided.
+  - Query Parameters: 
+    - `id` (optional): Filter users by ID.
+  - Response: Returns a list of users.
 
-title (string)
-asset_id (string)
-company (string)
-asset_type (string)
-serial_number (string)
-assigned_to (integer, optional)
-Response:
-
-Confirmation of the insertion.
-GET /users
-Retrieve a list of users. Can include query parameters for searching by ID.
-
-Query Parameters:
-
-id (integer, optional): User ID to filter results.
-Response:
-
-Array of user objects.
-POST /users
-Add a new user.
-
-Request Body:
-
-name (string)
-sname (string)
-mail (string)
-Response:
-
-Confirmation of the insertion.
+- `POST /users`: Inserts a new user record into the database.
+  - Request Body:
+    - `name`, `sname`, `mail`.
+  - Response: Returns the result of the insert operation.
