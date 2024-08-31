@@ -16,7 +16,7 @@ node index.js
 
 ### Client 
 
-# Have Node.js installed
+# Have Node.js installed 
 https://nodejs.org/en
 
 ### cd xu-inventory-website
