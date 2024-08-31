@@ -50,7 +50,7 @@ const UserForm = () => {
   };
 
   return (
-    <div>
+    <div className="vertical-center"> 
       <h1>Add New User</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -92,7 +92,7 @@ const UserForm = () => {
         <button type="submit">Submit</button>
       </form>
       
-      {message && <p>{message}</p>}
+      {message && <p className="feedback-message">{message}</p>}
     </div>
   );
 };

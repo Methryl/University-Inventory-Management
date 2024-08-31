@@ -19,7 +19,7 @@ node index.js
 # Have Node.js installed 
 https://nodejs.org/en
 
-### cd xu-inventory-website
+### cd xu-inventory-website/
 
 ### `npm start`
 

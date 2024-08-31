@@ -11,10 +11,9 @@ const AssetForm = () => {
   });
 
   const [users, setUsers] = useState([]);
-  const [message, setMessage] = useState(''); // State for feedback message
+  const [message, setMessage] = useState(''); 
 
   useEffect(() => {
-    // Fetch users to populate the dropdown
     const fetchUsers = async () => {
       try {
         const response = await fetch('http://localhost:3001/users');
@@ -55,7 +54,6 @@ const AssetForm = () => {
       const result = await response.json();
       console.log('Success:', result);
       setMessage('Asset added successfully!');
-      // Clear form fields after successful submission
       setFormData({
         title: '',
         asset_id: '',
@@ -71,7 +69,7 @@ const AssetForm = () => {
   };
 
   return (
-    <div>
+    <div className="vertical-center"> 
       <h1>Add New Asset</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -154,7 +152,7 @@ const AssetForm = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
-      {message && <p className="feedback-message">{message}</p>} {/* Display feedback message */}
+      {message && <p className="feedback-message">{message}</p>}
     </div>
   );
 };
