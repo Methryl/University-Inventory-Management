@@ -1,6 +1,4 @@
-/* home.css */
 
-/* Search Box Styling */
 .search-box {
   display: flex;
   align-items: center;
@@ -28,7 +26,6 @@
   background-color: #0056b3;
 }
 
-/* Home Box Container and Styling */
 .homeboxContainer {
   display: flex;
   gap: 20px;
@@ -58,7 +55,6 @@
   background-color: #0056b3;
 }
 
-/* Search Results Styling */
 .search-results {
   margin-top: 20px;
 }

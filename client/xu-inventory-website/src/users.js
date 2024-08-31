@@ -5,7 +5,6 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the backend
     fetch('http://localhost:3001/users')
       .then(response => {
         if (!response.ok) {
@@ -14,7 +13,7 @@ function Users() {
         return response.json();
       })
       .then(data => {
-        console.log('Fetched users:', data); // Log the data to verify
+        console.log('Fetched users:', data); 
         setUsers(data);
       })
       .catch(error => console.error('Error fetching users:', error));

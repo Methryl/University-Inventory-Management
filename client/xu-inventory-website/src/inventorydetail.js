@@ -6,7 +6,6 @@ function InventoryDetail() {
   const [asset, setAsset] = useState(null);
 
   useEffect(() => {
-    // Fetch asset details from the API
     fetch(`/api/assets/${id}`)
       .then(response => response.json())
       .then(data => setAsset(data))

@@ -1,4 +1,3 @@
-// Home.js
 import React, { useState } from 'react'; 
 import './home.css'; 
 import SearchBar from './SearchBar'; 

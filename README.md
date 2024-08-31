@@ -1,92 +1,138 @@
-### cd server:
-npm install express
-npm install mysql2
-npm install dotenv
-npm install cors
+### Asset Management System
+A simple asset management system built with React and Express, utilizing a MySQL database. This project includes a frontend React application for searching and displaying assets, and a backend Express server for handling database operations.
 
-SQL file attached 
+## Features
+Search for assets across title field.
+Display search results in a user-friendly interface.
+Manage assets and users with simple CRUD operations.
+## Technologies Used
+# Frontend:
 
+React
+CSS
+# Backend:
+
+# Have Node.js installed 
+https://nodejs.org/en
+Express
+MySQL
+CORS
+dotenv
+
+## Getting Started
+# Prerequisites
+Node.js (v14 or later)
+MySQL server
+An environment file (.env) with database credentials
+Setup
+Clone the Repository
+
+# terminal
+Copy code
+git clone https://github.com/Methryl/University-Inventory-Management
+cd University-Inventory-Management
+
+# Backend Setup
+
+Navigate to the backend directory:
+
+# terminal
+Copy code
+cd server
+
+Install dependencies:
+
+# terminal
+Copy code
+npm install
+Create a .env file in the backend directory with the following content (replace with your actual database credentials):
+
+
+Copy code
 create a .env file in server 
 DB_PORT = 
 DB_USER = 
 DB_PASSWORD = 
 DB = ''
 
+
+# needs to be installed befored starting the server
+### cd server:
+npm install express
+npm install mysql2
+npm install dotenv
+npm install cors
+
+# start server
 node index.js
 
-### Client 
+The backend server will run on http://localhost:3001.
 
-# Have Node.js installed 
-https://nodejs.org/en
+## Frontend Setup
 
-### cd xu-inventory-website/
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Navigate to the frontend directory:
 
 
+# terminal
+Copy code
+cd client
+cd xu-inventory-website/
 
-#Extra
+Install dependencies:(dont need if already in file)
 
-### `npm test`
+# terminal
+Copy code
+npm install
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Start the React application:
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# terminal
+Copy code
+npm start
+The frontend application will run on http://localhost:3000.
 
 
+# API Endpoints
+GET /assets
+Retrieve a list of assets. Can include query parameters for searching.
 
+Query Parameters:
+
+query (string): Search term to look for in title, asset ID, company, asset type, and serial number.
+Response:
+
+Array of asset objects.
+POST /assets
+Add a new asset.
+
+Request Body:
+
+title (string)
+asset_id (string)
+company (string)
+asset_type (string)
+serial_number (string)
+assigned_to (integer, optional)
+Response:
+
+Confirmation of the insertion.
+GET /users
+Retrieve a list of users. Can include query parameters for searching by ID.
+
+Query Parameters:
+
+id (integer, optional): User ID to filter results.
+Response:
+
+Array of user objects.
+POST /users
+Add a new user.
+
+Request Body:
+
+name (string)
+sname (string)
+mail (string)
+Response:
+
+Confirmation of the insertion.
