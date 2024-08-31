@@ -27,7 +27,6 @@ function InventoryDetail() {
       <p><strong>Asset Type:</strong> {asset.asset_type}</p>
       <p><strong>Serial Number:</strong> {asset.serial_number}</p>
       <p><strong>Assigned To:</strong> {asset.assigned_to}</p>
-      {/* Add more details or actions as needed */}
     </div>
   );
 }
